@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>ლილიები თასოსთვის</title>
+<link rel="icon" type="image/png" href="../lilies.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500&family=Noto+Serif+Georgian:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; height: 100dvh; cursor: pointer; }
+
+  .back {
+    position: fixed;
+    right: calc(clamp(1rem, 4vw, 3rem) + env(safe-area-inset-right));
+    top: 50%;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.3rem;
+    border-radius: 999px;
+    border: 1px solid rgba(249, 195, 210, 0.7);
+    background: rgba(20, 6, 12, 0.72);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #fbe3ea;
+    font: 500 clamp(0.95rem, min(1.8vw, 3.6vh), 1.15rem)/1.2 "Noto Serif Georgian", Georgia, serif;
+    text-decoration: none;
+    box-shadow: 0 0 24px rgba(243, 154, 178, 0.35);
+    opacity: 0;
+    transform: translate(24px, -50%);
+    pointer-events: none;
+    transition: opacity 1.4s ease, transform 1.4s cubic-bezier(.16, .8, .2, 1), background 0.3s ease, box-shadow 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back.is-shown { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
+  .back:hover, .back:focus-visible { background: rgba(243, 154, 178, 0.22); box-shadow: 0 0 34px rgba(243, 154, 178, 0.6); outline: none; }
+  .back span { font-size: 1.2em; line-height: 1; }
+
+  .rotate {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(243, 154, 178, 0.14), transparent 60%), #000;
+    color: #fbe3ea;
+    font-family: "Noto Sans Georgian", system-ui, sans-serif;
+    touch-action: none;
+  }
+  .rotate.is-on { display: flex; }
+  .rotate svg { width: 70px; margin-bottom: 1rem; overflow: visible; }
+  .rotate svg rect:first-child { fill: rgba(243, 154, 178, 0.08); stroke: #f39ab2; stroke-width: 3; }
+  .rotate small { letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.72rem; color: #f39ab2; }
+  .rotate strong { font: 600 2.1rem/1.1 "Noto Serif Georgian", Georgia, serif; }
+  .rotate p { margin: 0.3rem 0 0; max-width: 18rem; opacity: 0.8; font-style: italic; }
+  @media (prefers-reduced-motion: no-preference) {
+    .rotate svg { animation: turn 2.6s cubic-bezier(.6, 0, .3, 1) infinite; }
+  }
+  @keyframes turn {
+    0%, 18% { transform: rotate(0); }
+    50%, 78% { transform: rotate(-90deg); }
+    100% { transform: rotate(0); }
+  }
+
+  /* Landscape phone: tuck the button into the corner so it never sits on the flowers. */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .back { top: auto; bottom: calc(1rem + env(safe-area-inset-bottom)); padding: 0.65rem 1rem; transform: translate(24px, 0); }
+    .back.is-shown { transform: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="screen" aria-label="ლილიები იშლება"></canvas>
+<a class="back" id="back" href="../?from=lilies">დაბრუნდი მთავარ საიტზე <span aria-hidden="true">→</span></a>
+<div class="rotate" id="rotate" role="alertdialog" aria-modal="true" aria-labelledby="rotate-title">
+  <svg viewBox="0 0 64 104" aria-hidden="true">
+    <rect x="3" y="3" width="58" height="98" rx="11" />
+    <circle cx="32" cy="52" r="7" fill="#f39ab2" />
+  </svg>
+  <small>დაპაუზებულია</small>
+  <strong id="rotate-title">Rotate your phone</strong>
+  <p>მოატრიალე ტელეფონი. ლილიები აქ დაგელოდება.</p>
+</div>
+<script src="bouquet.js"></script>
+</body>
+</html>
